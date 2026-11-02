@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#173f35"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>Kasir Griya Anis</title><link rel="manifest" href="/manifest.json"><link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="login" class="login">
+  <div class="brand-mark">GA</div><h1>Griya Anis</h1><p>Kasir & Pengelolaan Stok</p>
+  <label>PIN Kasir</label><input id="pin" type="password" inputmode="numeric" maxlength="12" placeholder="Masukkan PIN">
+  <button id="loginBtn" class="primary">Masuk</button><small id="loginError"></small>
+</div>
+<div id="app" hidden>
+<header><div><b>GRIYA ANIS</b><small>Kasir & Stok Produk</small></div><button id="logout" class="ghost">Keluar</button></header>
+<nav>
+<button class="tab active" data-tab="kasir">Kasir</button><button class="tab" data-tab="produk">Produk</button><button class="tab" data-tab="stok">Stok</button><button class="tab" data-tab="laporan">Laporan</button>
+</nav>
+<main>
+<section id="kasir" class="page">
+  <div class="section-head"><div><h2>Transaksi</h2><p>Scan barcode atau cari produk</p></div><button id="scanBtn" class="scan">▦ Scan</button></div>
+  <video id="video" hidden playsinline></video><div id="scanHint" class="hint" hidden>Arahkan barcode ke dalam kamera. <button id="stopScan" class="link">Tutup kamera</button></div>
+  <input id="searchSale" class="search" placeholder="Cari nama atau barcode produk…">
+  <div id="saleMatches" class="matches"></div>
+  <h3>Keranjang</h3><div id="cart" class="empty">Belum ada produk dipilih.</div>
+  <div class="checkout">
+    <div class="total"><span>Total</span><strong id="cartTotal">Rp0</strong></div>
+    <label>Metode pembayaran</label><select id="payment"><option>Tunai</option><option>Transfer</option><option>QRIS</option></select>
+    <button id="checkoutBtn" class="primary" disabled>Selesaikan Transaksi</button>
+  </div>
+</section>
+<section id="produk" class="page" hidden>
+  <div class="section-head"><div><h2>Produk</h2><p>Daftar dan harga barang</p></div><button id="addProduct" class="primary small">+ Produk</button></div>
+  <input id="searchProducts" class="search" placeholder="Cari produk…"><div id="productList"></div>
+</section>
+<section id="stok" class="page" hidden>
+  <h2>Stok Masuk</h2><p>Tambah persediaan barang</p>
+  <label>Pilih produk</label><select id="stockProduct"></select>
+  <label>Jumlah masuk</label><input id="stockQty" type="number" min="0.01" step="0.01" placeholder="Contoh: 12">
+  <label>Keterangan</label><input id="stockNote" value="Pembelian barang">
+  <button id="stockBtn" class="primary">Simpan Stok Masuk</button>
+</section>
+<section id="laporan" class="page" hidden>
+  <h2>Laporan Hari Ini</h2><div class="stats"><div><small>Omzet</small><b id="revenue">Rp0</b></div><div><small>Transaksi</small><b id="transactions">0</b></div><div><small>Perkiraan laba kotor</small><b id="profit">Rp0</b></div><div><small>Stok menipis</small><b id="lowStock">0</b></div></div>
+  <h3>Transaksi Terakhir</h3><div id="salesHistory"></div>
+  <button id="exportBtn" class="secondary">Unduh cadangan data (JSON)</button>
+</section>
+</main>
+</div>
+<dialog id="productDialog">
+<form method="dialog" id="productForm">
+<h2 id="dialogTitle">Tambah Produk</h2><input type="hidden" id="productId">
+<label>Barcode (boleh kosong)</label><div class="inline"><input id="pBarcode" placeholder="Nomor barcode"><button type="button" id="cameraBarcode" class="secondary">Scan</button></div>
+<label>Nama produk</label><input id="pName" required placeholder="Nama barang">
+<label>Satuan</label><input id="pUnit" value="pcs" required>
+<div class="two"><div><label>Harga beli (Rp)</label><input id="pBuy" type="number" min="0" value="0"></div><div><label>Harga jual (Rp)</label><input id="pSell" type="number" min="0" value="0"></div></div>
+<div class="two"><div><label>Stok awal</label><input id="pStock" type="number" min="0" step="0.01" value="0"></div><div><label>Batas stok menipis</label><input id="pMin" type="number" min="0" step="0.01" value="0"></div></div>
+<div class="dialog-actions"><button value="cancel" class="secondary">Batal</button><button id="saveProduct" value="default" class="primary">Simpan</button></div>
+</form>
+</dialog>
+<div id="toast" role="status"></div>
+<script src="/app.js"></script>
+</body></html>
